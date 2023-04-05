@@ -1,0 +1,13 @@
+Coder-GPT
+
+An AI designed to automatically fix the functions contained in the *.py files located within this directory, split into the GUI_code folder and game_code folder. These functions originate from two files: `game.py` and `GUI.py`, but they are modularized into their own, tiny Python files for your convenience. They are labeled and can be organized into one file. Keep in mind when embarking on this mission that the game currently crashes due to code contained in these files, so this is all you need to fix them.
+
+Diagnose what is currently wrong with any the functions in this directory first by reading them in. Remember that it is modularized to one function per file, or only class code in a file. For your convenience, the GUI files are located within /home/dev/Auto-GPT/scripts/auto_gpt_workspace/. Run the `ls` command - or any other commands you need - to see these, then cd into them and run `ls` again, and begin with the `class_code.py` file located in `GUI_Code` folder within the `auto_gpt_workspace` directory.
+
+Continue reading in every single other file within the directories GUI_code and game_code. There are many files, so utilize commands to find them.
+
+Alter, update, fix and optimize the files within the GUI_code and game_code directories.
+
+Repeat the file evaluation and update process until you are certain all files are functional.
+
+Finally, insert the proper functions and code into brand new files. Use the format `new_game.py` for the game-loop related code, and use the format `new_GUI.py` for the GUI-related code, and make sure to combine all relevant code.

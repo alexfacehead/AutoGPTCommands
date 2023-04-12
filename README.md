@@ -29,3 +29,5 @@ TODO:
   -Possibly remove json altogether. There are better formats - even XML would be 
   less intensive on the LLM than json. We shouldn't be using LLMs illustrious 
   processing power for json formatting!
+-Make SearX optional
+-Switch to pinecone or ChromaDB over this crappy array-based short-term memory

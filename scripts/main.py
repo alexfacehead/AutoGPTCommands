@@ -358,7 +358,7 @@ while True:
                     f"\nResult: {result} " \
                     f"\nHuman Feedback: {user_input} "
 
-    mem.add(memory_to_add)
+    cmd.execute_command("memory_add", memory_to_add)
 
     # Check if there's a result from the command append it to the message
     # history

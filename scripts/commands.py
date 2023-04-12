@@ -6,7 +6,7 @@ import agent_manager as agents
 import speak
 from config import Config
 import ai_functions as ai
-from file_operations import read_file, write_to_file, append_to_file, delete_file
+from file_operations import read_file, write_to_file, append_to_file, delete_file, read_file_lines
 from execute_code import execute_python_file
 from json_parser import fix_and_parse_json
 from duckduckgo_search import ddg
@@ -14,6 +14,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import subprocess
 import requests
+import os
 
 cfg = Config()
 
@@ -57,11 +58,11 @@ def execute_command(command_name, arguments):
             else:
                 return google_search(arguments["input"])
         elif command_name == "memory_add":
-            return commit_memory(arguments["string"])
+            return commit_memory(arguments["key"], arguments["value"])
         elif command_name == "memory_del":
             return delete_memory(arguments["key"])
         elif command_name == "memory_ovr":
-            return overwrite_memory(arguments["key"], arguments["string"])
+            return overwrite_memory(arguments["key"], arguments["value"])
         elif command_name == "start_agent":
             return start_agent(
                 arguments["name"],
@@ -102,6 +103,10 @@ def execute_command(command_name, arguments):
             return run_command(arguments["cmd"])
         elif command_name == "searx":
             return searx_search(arguments["input"]) # SearX search, added by Alex
+        elif command_name == "read_file_lines":
+            return read_file_lines(arguments["file"], arguments["start_line"], arguments["end_line"], allow_outside=True) # Read file lines, added by Alex
+        elif command_name == "get_memory":
+            return get_memory()
         elif command_name == "task_complete":
             shutdown()
         else:
@@ -165,7 +170,9 @@ def searx_search(query, num_results=8):
         searx_url = cfg.searx_url
         if searx_url:
             searx_url = searx_url.rstrip("/")
-            response = requests.get(f"{searx_url}/search", params={"q": query, "format": "json", "count": num_results})
+            session = requests.Session()
+            session.auth = (cfg.searx_username, cfg.searx_password)
+            response = session.get(f"{searx_url}/search", params={"q": query, "format": "json", "count": num_results})
             response.raise_for_status()
 
             data = response.json()
@@ -201,35 +208,45 @@ def get_hyperlinks(url):
     link_list = browse.scrape_links(url)
     return link_list
 
+def save_memory():
+    with open(os.path.join(os.path.dirname(__file__), "memory.py"), "w") as f:
+        f.write("permanent_memory = " + str(mem.permanent_memory))
 
-def commit_memory(string):
-    _text = f"""Committing memory with string "{string}" """
-    mem.permanent_memory.append(string)
+def get_memory():
+    return mem.permanent_memory
+
+def commit_memory(key, value):
+    key = str(key)
+    _text = f"""Committing memory with key "{key}" and value "{value}" """
+    mem.permanent_memory[key] = value
+    save_memory()
     return _text
 
-
 def delete_memory(key):
-    if key >= 0 and key < len(mem.permanent_memory):
+    key = str(key)
+    if key in mem.permanent_memory:
         _text = "Deleting memory with key " + str(key)
         del mem.permanent_memory[key]
+        save_memory()
         print(_text)
         return _text
     else:
         print("Invalid key, cannot delete memory.")
         return None
 
-
-def overwrite_memory(key, string):
-    if int(key) >= 0 and key < len(mem.permanent_memory):
+def overwrite_memory(key, value):
+    key = str(key)
+    if key in mem.permanent_memory:
         _text = "Overwriting memory with key " + \
-            str(key) + " and string " + string
-        mem.permanent_memory[key] = string
+            str(key) + " and value " + value
+        mem.permanent_memory[key] = value
+        save_memory()
         print(_text)
         return _text
     else:
         print("Invalid key, cannot overwrite memory.")
         return None
-
+    
 # Added by Alex Hugli
 # Runs any command
 def run_command(cmd):

@@ -1,7 +1,5 @@
-import json
 import random
 import commands as cmd
-import memory as mem
 import data
 import chat
 from colorama import Fore, Style
@@ -11,11 +9,13 @@ import speak
 from enum import Enum, auto
 import sys
 from config import Config
-from json_parser import fix_and_parse_json
 from ai_config import AIConfig
 import traceback
 import yaml
 import argparse
+import memory as mem
+import json
+from json_parser import fix_and_parse_json
 
 
 def print_to_console(
@@ -241,11 +241,9 @@ def prompt_user():
 def parse_arguments():
     global cfg
     cfg.set_continuous_mode(False)
-    cfg.set_speak_mode(False)
     
     parser = argparse.ArgumentParser(description='Process arguments.')
     parser.add_argument('--continuous', action='store_true', help='Enable Continuous Mode')
-    parser.add_argument('--speak', action='store_true', help='Enable Speak Mode')
     parser.add_argument('--debug', action='store_true', help='Enable Debug Mode')
     parser.add_argument('--gpt3only', action='store_true', help='Enable GPT3.5 Only Mode')
     args = parser.parse_args()
@@ -257,10 +255,6 @@ def parse_arguments():
             Fore.RED,
             "Continuous mode is not recommended. It is potentially dangerous and may cause your AI to run forever or carry out actions you would not usually authorise. Use at your own risk.")
         cfg.set_continuous_mode(True)
-
-    if args.speak:
-        print_to_console("Speak Mode: ", Fore.GREEN, "ENABLED")
-        cfg.set_speak_mode(True)
 
     if args.gpt3only:
         print_to_console("GPT3.5 Only Mode: ", Fore.GREEN, "ENABLED")
@@ -277,8 +271,10 @@ prompt = construct_prompt()
 # Initialize variables
 full_message_history = []
 result = None
+next_action_count = 0
 # Make a constant:
 user_input = "Determine which next command to use, and respond using the format specified above:"
+
 
 # Interaction Loop
 while True:
@@ -291,7 +287,6 @@ while True:
             mem.permanent_memory,
             cfg.fast_token_limit) # TODO: This hardcodes the model to use GPT3.5. Make this an argument
 
-    # print("assistant reply: "+assistant_reply)
     # Print Assistant thoughts
     print_assistant_thoughts(assistant_reply)
 
@@ -301,7 +296,7 @@ while True:
     except Exception as e:
         print_to_console("Error: \n", Fore.RED, str(e))
 
-    if not cfg.continuous_mode:
+    if not cfg.continuous_mode and next_action_count == 0:
         ### GET USER AUTHORIZATION TO EXECUTE COMMAND ###
         # Get key press: Prompt the user to press enter to continue or escape
         # to exit
@@ -311,12 +306,20 @@ while True:
             Fore.CYAN,
             f"COMMAND = {Fore.CYAN}{command_name}{Style.RESET_ALL}  ARGUMENTS = {Fore.CYAN}{arguments}{Style.RESET_ALL}")
         print(
-            f"Enter 'y' to authorise command or 'n' to exit program, or enter feedback for {ai_name}...",
+            f"Enter 'y' to authorise command, 'y -N' to run N continuous commands, 'n' to exit program, or enter feedback for {ai_name}...",
             flush=True)
         while True:
             console_input = input(Fore.MAGENTA + "Input:" + Style.RESET_ALL)
             if console_input.lower() == "y":
                 user_input = "GENERATE NEXT COMMAND JSON"
+                break
+            elif console_input.lower().startswith("y -"):
+                try:
+                    next_action_count = abs(int(console_input.split(" ")[1]))
+                    user_input = "GENERATE NEXT COMMAND JSON"
+                except ValueError:
+                    print("Invalid input format. Please enter 'y -n' where n is the number of continuous tasks.")
+                    continue
                 break
             elif console_input.lower() == "n":
                 user_input = "EXIT"
@@ -348,6 +351,14 @@ while True:
         result = f"Human feedback: {user_input}"
     else:
         result = f"Command {command_name} returned: {cmd.execute_command(command_name, arguments)}"
+        if next_action_count > 0:
+            next_action_count -= 1
+
+    memory_to_add = f"Assistant Reply: {assistant_reply} " \
+                    f"\nResult: {result} " \
+                    f"\nHuman Feedback: {user_input} "
+
+    mem.add(memory_to_add)
 
     # Check if there's a result from the command append it to the message
     # history
@@ -359,4 +370,3 @@ while True:
             chat.create_chat_message(
                 "system", "Unable to execute command"))
         print_to_console("SYSTEM: ", Fore.YELLOW, "Unable to execute command")
-

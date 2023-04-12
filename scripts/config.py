@@ -25,13 +25,16 @@ class Config(metaclass=Singleton):
     """
 
     def __init__(self):
+        self.searx_url = os.getenv("SEARX_URL")
+        self.searx_username = os.getenv("SEARX_USERNAME")
+        self.searx_password = os.getenv("SEARX_PASSWORD")
         self.continuous_mode = False
         self.speak_mode = False
         # TODO - make these models be self-contained, using langchain, so we can configure them once and call it good 
         self.fast_llm_model = os.getenv("FAST_LLM_MODEL", "gpt-3.5-turbo") 
         self.smart_llm_model = os.getenv("SMART_LLM_MODEL", "gpt-4")
         self.fast_token_limit = int(os.getenv("FAST_TOKEN_LIMIT", 4000))
-        self.smart_token_limit = int(os.getenv("SMART_TOKEN_LIMIT", 8000))
+        self.smart_token_limit = int(os.getenv("SMART_TOKEN_LIMIT", 2000))
         
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
@@ -50,6 +53,15 @@ class Config(metaclass=Singleton):
 
     def set_fast_llm_model(self, value: str):
         self.fast_llm_model = value
+
+    def set_searx_url(self, value: str):
+        self.searx_url = value
+
+    def set_searx_username(self, value: str):
+        self.searx_username = value
+
+    def set_searx_password(self, value: str):
+        self.searx_password = value
 
     def set_smart_llm_model(self, value: str):
         self.smart_llm_model = value

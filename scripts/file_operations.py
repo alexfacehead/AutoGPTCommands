@@ -33,6 +33,19 @@ def read_file(filename, allow_outside=False):
     except Exception as e:
         return "Error: " + str(e)
 
+# Added by Alex Hugli for programming
+def read_file_lines(filename, start_line, end_line, allow_outside=False):
+    try:
+        if allow_outside:
+            filepath = os.path.join("/home/dev/Auto-GPT/", filename)
+        else:
+            filepath = safe_join(working_directory, filename)
+
+        with open(filepath, "r") as f:
+            content = f.readlines()
+        return "".join(content[start_line - 1:end_line])
+    except Exception as e:
+        return "Error: " + str(e)
 
 def write_to_file(filename, text, allow_outside=False):
     try:

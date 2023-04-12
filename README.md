@@ -1,7 +1,4 @@
 # Auto-GPT: An Autonomous GPT-4 Experiment
-![GitHub Repo stars](https://img.shields.io/github/stars/Torantulino/auto-gpt?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/siggravitas?style=social)
-[![](https://dcbadge.vercel.app/api/server/PQ7VX6TY4t?style=flat)](https://discord.gg/PQ7VX6TY4t)
 
 ---------------------------------------------
 

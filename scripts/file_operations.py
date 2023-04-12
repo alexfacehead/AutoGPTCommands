@@ -1,8 +1,12 @@
 import os
 import os.path
+from dotenv import load_dotenv
 
 # Set a dedicated folder for file I/O
 working_directory = "auto_gpt_workspace"
+base_auto_gpt = os.environ.get('BASE_AUTO_GPT')
+# Grab env filepath
+load_dotenv()
 
 if not os.path.exists(working_directory):
     os.makedirs(working_directory)
@@ -13,7 +17,7 @@ def safe_join(base, *paths):
     norm_new_path = os.path.normpath(new_path)
 
     if os.path.commonprefix([base, norm_new_path]) != base:
-        base_auto_gpt = "/home/dev/Auto-GPT/"
+        base_auto_gpt = os.environ.get(base_auto_gpt)
         if os.path.commonprefix([base_auto_gpt, norm_new_path]) != base_auto_gpt:
             raise ValueError("Attempted to access outside of allowed directories.")
 
@@ -23,7 +27,7 @@ def safe_join(base, *paths):
 def read_file(filename, allow_outside=False):
     try:
         if allow_outside:
-            filepath = os.path.join("/home/dev/Auto-GPT/", filename)
+            filepath = os.path.join(base_auto_gpt, filename)
         else:
             filepath = safe_join(working_directory, filename)
 

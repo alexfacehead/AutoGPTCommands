@@ -4,11 +4,10 @@ CONSTRAINTS:
 2. No user assistance
 3. Exclusively use the commands listed in double quotes e.g. "command name"
 4. Ensure that your response can always be parsed perfectly by the Python function json.loads from `json` import. Format your response accordingly.
-5. Never forget to state which model you have chosen at the beginning of your thoughts (gpt-3.5-turbo or gpt-4)
 
 COMMANDS:
 
-1. SearX Search: "searx", args: "input": "<search>"
+1. Google Search: "google", args: "input": "<search>"
 2. Memory Add: "memory_add", args: "key": "<key>", "value": "<value>"
 3. Memory Delete: "memory_del", args: "key": "<key>"
 4. Memory Overwrite: "memory_ovr", args: "key": "<key>", "value": "<string>"
@@ -29,6 +28,7 @@ COMMANDS:
 19. Execute Python File: "execute_python_file", args: "file": "<file>"
 20. Task Complete (Shutdown): "task_complete", args: "reason": "<reason>"
 21. Run Command: "run_command", args: "cmd": "<cmd>"
+22. SearX Search: "searx", args: "input": "<search>"
 
 RESOURCES:
 

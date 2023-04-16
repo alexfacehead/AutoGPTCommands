@@ -6,8 +6,6 @@ from colorama import Fore, Style
 from spinner import Spinner
 import time
 import speak
-from enum import Enum, auto
-import sys
 from config import Config
 from ai_config import AIConfig
 import traceback
@@ -16,7 +14,8 @@ import argparse
 import memory as mem
 import json
 from json_parser import fix_and_parse_json
-
+from dotenv import load_dotenv
+import os
 
 def print_to_console(
         title,
@@ -240,12 +239,20 @@ def prompt_user():
 
 def parse_arguments():
     global cfg
-    cfg.set_continuous_mode(False)
-    
+    cfg.set_continuous_mode(False) # Default value
+    cfg.set_no_search(False)  # Default value
+
+    # Load the .env file
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env_file = os.path.join(base_dir, ".env")
+    load_dotenv(env_file)
+
     parser = argparse.ArgumentParser(description='Process arguments.')
+    
     parser.add_argument('--continuous', action='store_true', help='Enable Continuous Mode')
     parser.add_argument('--debug', action='store_true', help='Enable Debug Mode')
     parser.add_argument('--gpt3only', action='store_true', help='Enable GPT3.5 Only Mode')
+    parser.add_argument('--no-search', action='store_true', help='Disable Search')
     args = parser.parse_args()
 
     if args.continuous:
@@ -260,6 +267,8 @@ def parse_arguments():
         print_to_console("GPT3.5 Only Mode: ", Fore.GREEN, "ENABLED")
         cfg.set_smart_llm_model(cfg.fast_llm_model)
 
+    # Set no_search value in the Config class based on the --no-search flag
+    cfg.set_no_search(args.no_search)
 
 # TODO: fill in llm values here
 

@@ -15,6 +15,7 @@ from googleapiclient.errors import HttpError
 import subprocess
 import requests
 import os
+from dotenv import load_dotenv
 
 cfg = Config()
 
@@ -50,6 +51,7 @@ def get_command(response):
 def execute_command(command_name, arguments):
     try:
         if command_name == "google":
+            print("DEBUG: " + str(command_name) + str(arguments))
             
             # Check if the Google API key is set and use the official search method
             # If the API key is not set or has only whitespaces, use the unofficial search method
@@ -101,8 +103,17 @@ def execute_command(command_name, arguments):
             return execute_python_file(arguments["file"])
         elif command_name == "run_command": # Run any command, added by Alex Hugli
             return run_command(arguments["cmd"])
+        # Added a check for whether SearX server is set
         elif command_name == "searx":
-            return searx_search(arguments["input"]) # SearX search, added by Alex
+            if not cfg.no_search and cfg.searx_url and cfg.searx_username and cfg.searx_password:
+                return searx_search(arguments["input"])  # SearX search, added by Alex
+            else:
+                if cfg.google_api_key and (cfg.google_api_key.strip() if cfg.google_api_key else None):
+                    print("DEBUG: SEARX NOT AVAILABLE, USING GOOGLE")
+                    return execute_command("google", arguments)
+                else:
+                    print("DEBUG: SEARX & GOOGLE NOT AVAILABLE, ATTEMPTING TO USE PUBLIC GOOGLE API")
+                    return google_search(arguments["input"])
         elif command_name == "read_file_lines":
             return read_file_lines(arguments["file"], arguments["start_line"], arguments["end_line"], allow_outside=True) # Read file lines, added by Alex
         elif command_name == "get_memory":

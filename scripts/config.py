@@ -2,7 +2,8 @@ import os
 import openai
 from dotenv import load_dotenv
 # Load environment variables from .env file
-load_dotenv()
+env_file = "/home/dev/Auto-GPT/.env" # EXACT file path of your .env file goes here. EXAMPLE: /home/dev/Auto-GPT/scripts/.env
+load_dotenv(env_file)
 
 class Singleton(type):
     """
@@ -25,6 +26,7 @@ class Config(metaclass=Singleton):
     """
 
     def __init__(self):
+        #self.no_search = os.getenv("NO_SEARCH")
         self.searx_url = os.getenv("SEARX_URL")
         self.searx_username = os.getenv("SEARX_USERNAME")
         self.searx_password = os.getenv("SEARX_PASSWORD")
@@ -83,3 +85,19 @@ class Config(metaclass=Singleton):
     
     def set_custom_search_engine_id(self, value: str):
         self.custom_search_engine_id = value
+
+    def update_env(self, key: str, value: str, env_file: str):
+        with open(env_file, 'r') as file:
+            lines = file.readlines()
+
+        with open(env_file, 'w') as file:
+            for line in lines:
+                if line.startswith(key):
+                    line = f"{key}={value}\n"
+                file.write(line)
+
+    def set_no_search(self, value: bool):
+        self.no_search = value
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        env_file = os.path.join(base_dir, ".env")
+        self.update_env('NO_SEARCH', str(value), env_file)

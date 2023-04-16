@@ -1,1 +1,1 @@
-permanent_memory = {}
+permanent_memory = {'richest_person_google': 'Elon Musk'}

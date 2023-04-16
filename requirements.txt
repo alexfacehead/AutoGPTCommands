@@ -11,3 +11,4 @@ gTTS==2.3.1
 docker
 duckduckgo-search
 google-api-python-client #(https://developers.google.com/custom-search/v1/overview) 
+pathlib>=1.0.1; python_version < '3.4' # Only needed for Python versions older than 3.4

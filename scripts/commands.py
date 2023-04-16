@@ -61,6 +61,8 @@ def execute_command(command_name, arguments):
                 return google_search(arguments["input"])
         elif command_name == "memory_add":
             return commit_memory(arguments["key"], arguments["value"])
+        elif command_name == "memory_list":
+            return 
         elif command_name == "memory_del":
             return delete_memory(arguments["key"])
         elif command_name == "memory_ovr":
@@ -233,6 +235,10 @@ def commit_memory(key, value):
     save_memory()
     return _text
 
+def retrieve_memory_keys():
+    keys = mem.permanent_memory.keys()
+    return keys
+
 def delete_memory(key):
     key = str(key)
     if key in mem.permanent_memory:
@@ -287,7 +293,7 @@ def start_agent(name, task, prompt, model=cfg.fast_llm_model):
     key, ack = agents.create_agent(task, first_message, model)
 
     if cfg.speak_mode:
-        speak.say_text(f"Hello {voice_name}. Your task is as follows. {task}.")
+        speak.say_text(f"Hello {voice_name}. Your task is as follows. {task}")
 
     # Assign task (prompt), get response
     agent_response = message_agent(key, prompt)

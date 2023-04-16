@@ -28,10 +28,42 @@ and all messy.
 
 Remember, this script uses SearX. Remove the functionality from `commands.py` on lines 104/105 if you don't want to use it - but it's free and decent.
 
+It's also worth it to mention that this script requires very, very precise directions.
+Order matters, and so does what tools you tell it to use. Unless you're using GPT-4, then
+that model does a bit better with vagueness, but not really.
+
 TODO:
 * Fix the horrible, horrible json prompting
   * Possibly remove json altogether. There are better formats - even XML would be 
   less intensive on the LLM than json. We shouldn't be using LLMs illustrious 
   processing power for json formatting!
-* Make SearX optional
 * Switch to pinecone or ChromaDB over this crappy array-based short-term memory
+
+Changelog:
+- Made SearX optional
+- Added `run.sh` and `run.bat` with flags
+- Made search optional altogether using `--no-search` flag
+- Made the `.env` file parsing a little better (MAKE SURE YOU RENAME `.env.template` to `.env`!)
+
+# Example Gallery
+
+Click on the images to view them in full size.
+
+<table>
+  <tr>
+    <td><a href="/Auto-GPT/examples/ex1.png"><img src="/Auto-GPT/examples/ex1.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex2.png"><img src="/Auto-GPT/examples/ex2.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex3.png"><img src="/Auto-GPT/examples/ex3.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex4.png"><img src="/Auto-GPT/examples/ex4.png" width="200"></a></td>
+  </tr>
+  <tr>
+    <td><a href="/Auto-GPT/examples/ex5.png"><img src="/Auto-GPT/examples/ex5.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex6.png"><img src="/Auto-GPT/examples/ex6.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex7.png"><img src="/Auto-GPT/examples/ex7.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex8.png"><img src="/Auto-GPT/examples/ex8.png" width="200"></a></td>
+  </tr>
+  <tr>
+    <td><a href="/Auto-GPT/examples/ex9.png"><img src="/Auto-GPT/examples/ex9.png" width="200"></a></td>
+    <td><a href="/Auto-GPT/examples/ex10.png"><img src="/Auto-GPT/examples/ex10.png" width="200"></a></td>
+  </tr>
+</table>

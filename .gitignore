@@ -10,3 +10,4 @@ scripts/auto_gpt_workspace/*
 last_run_ai_settings.yaml
 outputs/*
 nohup.out
+.github/workflows/auto_format.yml

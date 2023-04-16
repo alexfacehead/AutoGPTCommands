@@ -51,19 +51,19 @@ Click on the images to view them in full size.
 
 <table>
   <tr>
-    <td><a href="/Auto-GPT/examples/ex1.png"><img src="/Auto-GPT/examples/ex1.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex2.png"><img src="/Auto-GPT/examples/ex2.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex3.png"><img src="/Auto-GPT/examples/ex3.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex4.png"><img src="/Auto-GPT/examples/ex4.png" width="200"></a></td>
+    <td><a href="examples/ex1.png"><img src="examples/ex1.png" width="200"></a></td>
+    <td><a href="examples/ex2.png"><img src="examples/ex2.png" width="200"></a></td>
+    <td><a href="examples/ex3.png"><img src="examples/ex3.png" width="200"></a></td>
+    <td><a href="examples/ex4.png"><img src="examples/ex4.png" width="200"></a></td>
   </tr>
   <tr>
-    <td><a href="/Auto-GPT/examples/ex5.png"><img src="/Auto-GPT/examples/ex5.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex6.png"><img src="/Auto-GPT/examples/ex6.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex7.png"><img src="/Auto-GPT/examples/ex7.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex8.png"><img src="/Auto-GPT/examples/ex8.png" width="200"></a></td>
+    <td><a href="examples/ex5.png"><img src="examples/ex5.png" width="200"></a></td>
+    <td><a href="examples/ex6.png"><img src="examples/ex6.png" width="200"></a></td>
+    <td><a href="examples/ex7.png"><img src="examples/ex7.png" width="200"></a></td>
+    <td><a href="examples/ex8.png"><img src="examples/ex8.png" width="200"></a></td>
   </tr>
   <tr>
-    <td><a href="/Auto-GPT/examples/ex9.png"><img src="/Auto-GPT/examples/ex9.png" width="200"></a></td>
-    <td><a href="/Auto-GPT/examples/ex10.png"><img src="/Auto-GPT/examples/ex10.png" width="200"></a></td>
+    <td><a href="examples/ex9.png"><img src="examples/ex9.png" width="200"></a></td>
+    <td><a href="examples/ex10.png"><img src="examples/ex10.png" width="200"></a></td>
   </tr>
 </table>

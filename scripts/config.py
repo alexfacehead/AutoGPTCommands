@@ -2,7 +2,13 @@ import os
 import openai
 from dotenv import load_dotenv
 # Load environment variables from .env file
-env_file = "/home/dev/Auto-GPT/.env" # EXACT file path of your .env file goes here. EXAMPLE: /home/dev/Auto-GPT/scripts/.env
+env_file = "" # EXACT file path of your .env file goes here. EXAMPLE: /home/dev/Auto-GPT/scripts/.env
+# If the user doesn't provide the exact path, use the default .env location
+if not env_file:
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.join(current_path, "..")
+    env_file = os.path.join(project_root, ".env")
+
 load_dotenv(env_file)
 
 class Singleton(type):

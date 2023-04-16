@@ -49,6 +49,17 @@ Changelog:
 
 Click on the images to view them in full size.
 
+This is a crappy example meant to showcase some basic functionality. The original goal prompt was:
+```Name:  ResearcherGPT
+Role:  You will delegate by using "start_agent" and tell them to research and return all the information about the "shadow government" key figures. Then, retrieve the information using "memory_list" and summarize it into an article.
+Goals: ['Delegate to a sub-agent by using "start_agent"', 'Specify to the agent that they must return a summary of key players in the world', 'Make sure to delegate multiple agents', "Then, when they're done, retrieve the information from memory", 'Summarize and write an article']```
+
+While my `memory.py` file's `permanent_memory` attribute accidentally had something about Elon musk in it - I feel like this is a funny and simple showcase of some of the abilities.
+
+There will always be slight issues sometimes when it comes to parsing Json. This is normal. If it does, please simplify your directions. It can almost always be broken down into subtasks.
+
+Removing JSON feature to come soon - langchain project is still in development. At the moment it's about 3x faster than this project.
+
 <table>
   <tr>
     <td><a href="examples/ex1.png"><img src="examples/ex1.png" width="200"></a></td>

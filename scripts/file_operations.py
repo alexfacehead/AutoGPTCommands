@@ -41,7 +41,7 @@ def read_file(filename, allow_outside=False):
 def read_file_lines(filename, start_line, end_line, allow_outside=False):
     try:
         if allow_outside:
-            filepath = os.path.join("/home/dev/Auto-GPT/", filename)
+            filepath = os.path.join(base_auto_gpt, filename)
         else:
             filepath = safe_join(working_directory, filename)
 
@@ -54,7 +54,7 @@ def read_file_lines(filename, start_line, end_line, allow_outside=False):
 def write_to_file(filename, text, allow_outside=False):
     try:
         if allow_outside:
-            filepath = os.path.join("/home/dev/Auto-GPT/", filename)
+            filepath = os.path.join(base_auto_gpt, filename)
         else:
             filepath = safe_join(working_directory, filename)
 
@@ -70,7 +70,7 @@ def write_to_file(filename, text, allow_outside=False):
 def append_to_file(filename, text, allow_outside=False):
     try:
         if allow_outside:
-            filepath = os.path.join("/home/dev/Auto-GPT/", filename)
+            filepath = os.path.join(base_auto_gpt, filename)
         else:
             filepath = safe_join(working_directory, filename)
 

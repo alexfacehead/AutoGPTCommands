@@ -18,7 +18,9 @@ import os
 from dotenv import load_dotenv
 
 cfg = Config()
-
+base_auto_gpt = os.environ.get('BASE_AUTO_GPT')
+allow_outside = False
+if base_auto_gpt: allow_outside = True
 
 def get_command(response):
     try:
@@ -83,11 +85,11 @@ def execute_command(command_name, arguments):
         elif command_name == "get_hyperlinks":
             return get_hyperlinks(arguments["url"])
         elif command_name == "read_file":
-            return read_file(arguments["file"], allow_outside=True)
+            return read_file(arguments["file"], allow_outside=allow_outside)
         elif command_name == "write_to_file":
-            return write_to_file(arguments["file"], arguments["text"])
+            return write_to_file(arguments["file"], arguments["text"], allow_outside=allow_outside)
         elif command_name == "append_to_file":
-            return append_to_file(arguments["file"], arguments["text"])
+            return append_to_file(arguments["file"], arguments["text"], allow_outside=allow_outside)
         elif command_name == "delete_file":
             return delete_file(arguments["file"])
         elif command_name == "browse_website":
